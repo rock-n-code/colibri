@@ -4,6 +4,9 @@ import PackageDescription
 
 let package = Package(
     name: "Colibri",
+    platforms: [
+        .macOS(.v10_15)
+    ],
     products: [
         .executable(
             name: "colibri",
