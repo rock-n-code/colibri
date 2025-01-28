@@ -1,0 +1,12 @@
+import AppLibrary
+import Logging
+
+struct TestArguments: AppArguments {
+
+    // MARK: Properties
+
+    let hostname = "127.0.0.1"
+    let port = 0
+    let logLevel: Logger.Level? = .trace
+
+}

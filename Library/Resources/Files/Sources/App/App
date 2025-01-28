@@ -1,0 +1,20 @@
+import AppLibrary
+import ArgumentParser
+
+@main
+struct App: AsyncParsableCommand {
+    
+    // MARK: Properties
+
+    @OptionGroup var options: Options
+    
+    // MARK: Functions
+
+    mutating func run() async throws {
+        let builder = AppBuilder(name: "App")
+        let app = try await builder(options)
+
+        try await app.runService()
+    }
+
+}

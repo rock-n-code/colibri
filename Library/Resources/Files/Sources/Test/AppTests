@@ -1,0 +1,33 @@
+import AppLibrary
+import Hummingbird
+import HummingbirdTesting
+import Testing
+
+struct AppTests {
+
+    // MARK: Properties
+
+    private let arguments = TestArguments()
+    private let builder = AppBuilder(name: "App")
+
+    // MARK: Route tests
+    
+    @Test(arguments: ["/"])
+    func routes(_ uri: String) async throws {
+        let app = try await builder(arguments)
+
+        try await app.test(.router) { client in
+            try await client.execute(uri: uri, method: .get) { response in
+                #expect(response.status == .ok)
+                #expect(response.body == .empty)
+            }
+        }
+    }
+
+}
+
+// MARK: ByteBuffer+Constants
+
+private extension ByteBuffer {
+    static let empty = ByteBuffer(string: "")
+}

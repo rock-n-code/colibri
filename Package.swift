@@ -8,42 +8,35 @@ let package = Package(
         .macOS(.v10_15)
     ],
     products: [
-        .executable(
-            name: "colibri",
-            targets: ["Colibri"]
-        ),
-        .library(
-            name: "ColibriLibrary",
-            targets: ["ColibriLibrary"]
-        )
+        .executable(name: "colibri", targets: ["Colibri"]),
+        .library(name: "ColibriLibrary", targets: ["ColibriLibrary"])
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/apple/swift-argument-parser",
-            from: "1.0.0"
-        )
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0")
     ],
     targets: [
         .executableTarget(
             name: "Colibri",
             dependencies: [
-                .product(
-                    name: "ArgumentParser",
-                    package: "swift-argument-parser"
-                ),
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .target(name: "ColibriLibrary")
             ],
-            path: "Sources/Executable"
+            path: "Executable"
         ),
         .target(
             name: "ColibriLibrary",
             dependencies: [],
-            path: "Sources/Library"
+            path: "Library",
+            resources: [
+                .copy("Resources")
+            ]
         ),
         .testTarget(
             name: "ColibriTests",
-            dependencies: ["ColibriLibrary"],
-            path: "Tests/Library"
+            dependencies: [
+                .target(name: "ColibriLibrary")
+            ],
+            path: "Test"
         )
     ]
 )

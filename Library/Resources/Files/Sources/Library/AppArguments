@@ -1,0 +1,11 @@
+import Logging
+
+public protocol AppArguments {
+    
+    // MARK: Properties
+    
+    var hostname: String { get }
+    var logLevel: Logger.Level? { get }
+    var port: Int { get }
+    
+}

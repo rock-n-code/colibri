@@ -1,0 +1,11 @@
+import Hummingbird
+
+extension Environment {
+    
+    // MARK: Computed
+    
+    public var logLevel: String? {
+        self.get("LOG_LEVEL")
+    }
+    
+}

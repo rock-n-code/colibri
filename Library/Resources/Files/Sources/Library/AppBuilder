@@ -1,0 +1,69 @@
+import Hummingbird
+import Logging
+
+public struct AppBuilder {
+
+    // MARK: Properties
+    
+    private let environment: Environment
+    private let name: String
+    
+    // MARK: Initialisers
+    
+    public init(name: String) {
+        self.environment = Environment()
+        self.name = name
+    }
+    
+    // MARK: Functions
+    
+    public func callAsFunction(
+        _ arguments: some AppArguments
+    ) async throws -> some ApplicationProtocol {
+        let logger = {
+            var logger = Logger(label: name)
+            
+            logger.logLevel = arguments.logLevel
+                ?? environment.logLevel.flatMap { Logger.Level(rawValue: $0) ?? .info }
+                ?? .info
+
+            return logger
+        }()
+        
+        let router = router(logger: logger)
+
+        return Application(
+            router: router,
+            configuration: .init(
+                address: .hostname(arguments.hostname, port: arguments.port),
+                serverName: name
+            ),
+            logger: logger
+        )
+    }
+
+}
+
+// MARK: - Helpers
+
+private extension AppBuilder {
+
+    // MARK: Type aliases
+    
+    typealias AppRequestContext = BasicRequestContext
+
+    // MARK: Functions
+    
+    func router(logger: Logger) -> Router<AppRequestContext> {
+        let router = Router()
+
+        router.add(middleware: LogRequestsMiddleware(logger.logLevel))
+        
+        router.get("/") { _,_ in
+            ""
+        }
+
+        return router
+    }
+
+}
