@@ -64,6 +64,19 @@ extension FileServiceMock: FileServicing {
         }
     }
     
+    func createFile(at location: URL, with data: Data) async throws (FileServiceError) {
+        guard let nextAction else { return }
+        
+        switch nextAction {
+        case .error(let error):
+            throw error
+        case let .createFile(location, data):
+            try await spy?.createFile(at: location, with: data)
+        default:
+            break
+        }
+    }
+    
     func createFolder(at location: URL) async throws (FileServiceError) {
         guard let nextAction else { return }
         
@@ -127,6 +140,7 @@ private extension FileServiceMock {
 extension FileServiceMock {
     enum Action {
         case copyFile(URL, URL)
+        case createFile(URL, Data)
         case createFolder(URL)
         case deleteItem(URL)
         case error(FileServiceError)

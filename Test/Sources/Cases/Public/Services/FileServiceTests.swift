@@ -35,7 +35,7 @@ struct FileServiceTests {
         // WHEN
         try await service.copyFile(from: source, to: destination)
 
-        // THENn
+        // THEN
         #expect(spy.actions.count == 1)
         
         let action = try #require(spy.actions.last)
@@ -52,6 +52,37 @@ struct FileServiceTests {
         // THEN
         await #expect(throws: error) {
             try await service.copyFile(from: .someExistingFile, to: .someNewFile)
+        }
+        
+        #expect(spy.actions.isEmpty == true)
+    }
+    
+    @Test(arguments: zip([URL.someNewFile],
+                         [Data("some data goes here...".utf8)]))
+    func createFile(with location: URL, and data: Data) async throws {
+        // GIVEN
+        let service = service(action: .createFile(location, data))
+        
+        // WHEN
+        try await service.createFile(at: location, with: data)
+        
+        // THEN
+        #expect(spy.actions.count == 1)
+        
+        let action = try #require(spy.actions.last)
+        
+        #expect(action == .fileCreated(location, data))
+    }
+    
+    @Test(arguments: [FileServiceError.itemAlreadyExists, .fileDataIsEmpty, .fileNotCreated])
+    func createFile(throws error: FileServiceError) async throws {
+        // GIVEN
+        let service = service(action: .error(error))
+        
+        // WHEN
+        // THEN
+        await #expect(throws: error) {
+            try await service.createFile(at: .someNewFile, with: .init())
         }
         
         #expect(spy.actions.isEmpty == true)

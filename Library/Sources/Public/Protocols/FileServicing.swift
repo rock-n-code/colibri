@@ -9,6 +9,7 @@ public protocol FileServicing {
     // MARK: Functions
     
     func copyFile(from source: URL, to destination: URL) async throws (FileServiceError)
+    func createFile(at location: URL, with data: Data) async throws (FileServiceError)
     func createFolder(at location: URL) async throws (FileServiceError)
     func deleteItem(at location: URL) async throws (FileServiceError)
     func isItemExists(at location: URL) async throws (FileServiceError) -> Bool
@@ -18,6 +19,8 @@ public protocol FileServicing {
 // MARK: - Errors
 
 public enum FileServiceError: Error, Equatable {
+    case fileDataIsEmpty
+    case fileNotCreated
     case folderNotCreated
     case itemAlreadyExists
     case itemEmptyData

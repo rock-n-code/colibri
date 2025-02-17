@@ -12,7 +12,8 @@ let package = Package(
         .library(name: "ColibriLibrary", targets: ["ColibriLibrary"])
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0")
+        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.0.0"),
+        .package(url: "https://github.com/hummingbird-project/swift-mustache", from: "2.0.0")
     ],
     targets: [
         .executableTarget(
@@ -25,7 +26,9 @@ let package = Package(
         ),
         .target(
             name: "ColibriLibrary",
-            dependencies: [],
+            dependencies: [
+                .product(name: "Mustache", package: "swift-mustache")
+            ],
             path: "Library",
             resources: [
                 .copy("Resources")

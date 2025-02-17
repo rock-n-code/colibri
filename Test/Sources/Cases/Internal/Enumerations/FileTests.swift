@@ -53,73 +53,59 @@ struct FileTests {
 private extension FileTests {
     enum Expectation {
         static let fileNames: [String] = [
-            "App.swift",
             "AppArguments.swift",
             "AppBuilder.swift",
             "AppOptions.swift",
-            "AppTests.swift",
             "Dockerfile",
             ".dockerignore",
             "Environment+Properties.swift",
             ".gitignore",
             "LICENSE",
             "LoggerLevel+Conformances.swift",
-            "Package.swift",
             "README.md",
             "TestArguments.swift"
         ]
 
         static let filePaths: [String] = [
-            "App/Sources/App.swift",
             "Library/Sources/Public/AppArguments.swift",
             "Library/Sources/Public/AppBuilder.swift",
             "App/Sources/AppOptions.swift",
-            "Test/Sources/Cases/Public/AppTests.swift",
             "Dockerfile",
             ".dockerignore",
             "Library/Sources/Internal/Environment+Properties.swift",
             ".gitignore",
             "LICENSE",
             "Library/Sources/Internal/LoggerLevel+Conformances.swift",
-            "Package.swift",
             "README.md",
             "Test/Sources/Helpers/TestArguments.swift"
         ]
         
         static let folders: [Folder] = [
-            .app,
             .libraryPublic,
             .libraryPublic,
             .app,
-            .testCasesPublic,
             .root,
             .root,
             .libraryInternal,
             .root,
             .root,
             .libraryInternal,
-            .root,
             .root,
             .testHelpers
         ]
-            
 
         static let resourcePaths: [String] = [
-            "Resources/Files/Sources/App",
             "Resources/Files/Sources/Library",
             "Resources/Files/Sources/Library",
             "Resources/Files/Sources/App",
-            "Resources/Files/Sources/Test",
             "Resources/Files/Sources",
             "Resources/Files/Sources",
             "Resources/Files/Sources/Library",
             "Resources/Files/Sources",
             "Resources/Files/Sources",
             "Resources/Files/Sources/Library",
-            "Resources/Files/Sources",
             "Resources/Files/Sources",
             "Resources/Files/Sources/Test"
         ]
     }
 }
-

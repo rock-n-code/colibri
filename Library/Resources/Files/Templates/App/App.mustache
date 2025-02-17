@@ -11,7 +11,7 @@ struct App: AsyncParsableCommand {
     // MARK: Functions
 
     mutating func run() async throws {
-        let builder = AppBuilder(name: "App")
+        let builder = AppBuilder(name: "{{ name }}")
         let app = try await builder(options)
 
         try await app.runService()

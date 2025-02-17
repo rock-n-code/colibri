@@ -1,7 +1,7 @@
 import Foundation
 
-public struct FileService: FileServicing {
-
+public struct FileService {
+    
     // MARK: Properties
     
     private let fileManager: FileManager
@@ -12,6 +12,12 @@ public struct FileService: FileServicing {
         self.fileManager = fileManager
     }
     
+}
+
+// MARK: - FileServicing
+
+extension FileService: FileServicing {
+
     // MARK: Computed
     
     public var currentFolder: URL {
@@ -24,7 +30,7 @@ public struct FileService: FileServicing {
     
     public func copyFile(from source: URL, to destination: URL) async throws (FileServiceError) {
         guard try await !isItemExists(at: destination) else {
-            throw FileServiceError.itemAlreadyExists
+            throw .itemAlreadyExists
         }
         
         var itemData: Data?
@@ -32,43 +38,59 @@ public struct FileService: FileServicing {
         do {
             itemData = try Data(contentsOf: source)
         } catch {
-            throw FileServiceError.itemEmptyData
+            throw .itemEmptyData
         }
         
         do {
             try itemData?.write(to: destination, options: .atomic)
         } catch {
-            throw FileServiceError.itemNotCopied
+            throw .itemNotCopied
+        }
+    }
+    
+    public func createFile(at location: URL, with data: Data) async throws (FileServiceError) {
+        guard try await !isItemExists(at: location) else {
+            throw .itemAlreadyExists
+        }
+        
+        guard !data.isEmpty else {
+            throw .fileDataIsEmpty
+        }
+        
+        do {
+            try data.write(to: location, options: .atomic)
+        } catch {
+            throw .fileNotCreated
         }
     }
 
     public func createFolder(at location: URL) async throws (FileServiceError) {
         guard try await !isItemExists(at: location) else {
-            throw FileServiceError.itemAlreadyExists
+            throw .itemAlreadyExists
         }
         
         do {
             try fileManager.createDirectory(at: location, withIntermediateDirectories: true)
         } catch {
-            throw FileServiceError.folderNotCreated
+            throw .folderNotCreated
         }
     }
     
     public func deleteItem(at location: URL) async throws (FileServiceError) {
         guard try await isItemExists(at: location) else {
-            throw FileServiceError.itemNotExists
+            throw .itemNotExists
         }
         
         do {
             try fileManager.removeItem(at: location)
         } catch {
-            throw FileServiceError.itemNotDeleted
+            throw .itemNotDeleted
         }
     }
     
     public func isItemExists(at location: URL) async throws (FileServiceError) -> Bool {
         guard location.isFileURL else {
-            throw FileServiceError.itemNotFileURL
+            throw .itemNotFileURL
         }
         
         let filePath = location.pathString

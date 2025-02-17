@@ -1,6 +1,5 @@
+import ColibriLibrary
 import Foundation
-
-@testable import ColibriLibrary
 
 final class FileServiceSpy {
     
@@ -20,6 +19,10 @@ extension FileServiceSpy: FileServicing {
     
     func copyFile(from source: URL, to destination: URL) async throws (FileServiceError) {
         actions.append(.fileCopied(source, destination))
+    }
+    
+    func createFile(at location: URL, with data: Data) async throws (FileServiceError) {
+        actions.append(.fileCreated(location, data))
     }
     
     func createFolder(at location: URL) async throws (FileServiceError) {
@@ -43,6 +46,7 @@ extension FileServiceSpy: FileServicing {
 
 extension FileServiceSpy {
     enum Action: Equatable {
+        case fileCreated(_ location: URL, _ data: Data)
         case fileCopied(_ source: URL, _ destination: URL)
         case folderCreated(_ location: URL)
         case itemDeleted(_ location: URL)

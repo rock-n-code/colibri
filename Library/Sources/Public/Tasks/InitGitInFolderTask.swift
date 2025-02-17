@@ -1,24 +1,26 @@
 import Foundation
 
 public struct InitGitInFolderTask {
+    
+    // MARK: Properties
+    
+    private let terminalService: TerminalServicing
 
     // MARK: Initialisers
     
-    public init() {}
+    public init(terminalService: TerminalServicing) {
+        self.terminalService = terminalService
+    }
     
     // MARK: Functions
     
-    public func callAsFunction(at rootFolder: URL) async throws (RunProcessError) {
-        let pathCommand = "/usr/bin/git"
+    public func callAsFunction(at rootFolder: URL) async throws (TerminalServiceError) {
+        let executableURL = URL(at: "/usr/bin/git")
         let pathFolder = rootFolder.pathString
         
-        var gitInit = RunProcessTask(process: Process())
-        var gitAdd = RunProcessTask(process: Process())
-        var gitCommit = RunProcessTask(process: Process())
-        
-        try await gitInit(path: pathCommand, arguments: ["init", pathFolder])
-        try await gitAdd(path: pathCommand, arguments: ["-C", pathFolder, "add", "."])
-        try await gitCommit(path: pathCommand, arguments: ["-C", pathFolder, "commit", "-m", "Initial commit"])
+        try await terminalService.run(executableURL, arguments: ["init", pathFolder])
+        try await terminalService.run(executableURL, arguments: ["-C", pathFolder, "add", "."])
+        try await terminalService.run(executableURL, arguments: ["-C", pathFolder, "commit", "-m", "Initial commit"])
     }
     
 }
