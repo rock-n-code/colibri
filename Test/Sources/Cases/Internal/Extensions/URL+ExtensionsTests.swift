@@ -24,8 +24,8 @@ struct URL_ExtensionsTests {
 
     // MARK: Computed tests
     
-    @Test(arguments: zip([URL.someFile, .dotFile, .tildeFile, .someURL],
-                         [String.someFilePath, .dotPath, .tildePath, .empty]))
+    @Test(arguments: zip([URL.someFile, .dotFile, .tildeFile, .someEncodedFile, .someURL],
+                         [String.someFilePath, .dotPath, .tildePath, .someEncodedPath, .empty]))
     func pathString(
         with url: URL,
         expects path: String
@@ -63,6 +63,7 @@ private extension String {
     static let dotPath = "."
     static let empty = ""
     static let tildePath = "~"
+    static let someEncodedPath = "/sömê/páth/fîlê"
     static let someFilePath = "/some/file/path"
 }
 
@@ -70,6 +71,7 @@ private extension String {
 
 private extension URL {
     static let dotFile = URL(at: .dotPath)
+    static let someEncodedFile = URL(at: "/sömê/páth/fîlê")
     static let someFile = URL(at: .someFilePath)
     static let someURL = URL(string: "https://some.url.path")!
     static let tildeFile = URL(at: .tildePath)

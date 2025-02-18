@@ -16,7 +16,7 @@ extension URL {
     
     var pathString: String {
         if #available(macOS 13.0, *) {
-            path(percentEncoded: true)
+            path(percentEncoded: false)
         } else {
             path
         }
