@@ -19,6 +19,14 @@ final class TerminalServiceMock {
         self.spy = spy
     }
     
+    init(
+        actions: [Action],
+        spy: TerminalServiceSpy? = nil
+    ) {
+        self.actions = actions
+        self.spy = spy
+    }
+    
 }
 
 // MARK: - TerminalServicing

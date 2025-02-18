@@ -19,6 +19,14 @@ final class TemplateServiceMock {
         self.spy = spy
     }
     
+    init(
+        actions: [Action],
+        spy: TemplateServiceSpy? = nil
+    ) {
+        self.actions = actions
+        self.spy = spy
+    }
+    
 }
 
 // MARK: - TemplateServicing
