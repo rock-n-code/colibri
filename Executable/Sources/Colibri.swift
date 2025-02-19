@@ -9,6 +9,7 @@ struct Colibri: AsyncParsableCommand {
         abstract: "The utility to manage your Hummingbird apps",
         subcommands: [
             Build.self,
+            Clean.self, 
             Create.self,
             Outdated.self,
             Update.self
