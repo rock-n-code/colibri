@@ -10,7 +10,8 @@ struct Colibri: AsyncParsableCommand {
         subcommands: [
             Build.self,
             Create.self,
-            Outdated.self
+            Outdated.self,
+            Update.self
         ],
         defaultSubcommand: Create.self
     )

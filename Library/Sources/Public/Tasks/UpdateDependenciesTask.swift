@@ -1,6 +1,6 @@
 import Foundation
 
-public struct OutdatedDependenciesTask {
+public struct UpdateDependenciesTask {
 
     // MARK: Properties
     
@@ -14,7 +14,7 @@ public struct OutdatedDependenciesTask {
     
     // MARK: Functions
     
-    public func callAsFunction(at location: URL? = nil) async throws (TerminalServiceError) {
+    public func callAsFunction(at location: URL? = nil, checkOutdated: Bool = false) async throws (TerminalServiceError) {
         let executableURL = URL(at: "/usr/bin/swift")
         
         var arguments: [String] = ["package", "update"]
@@ -23,8 +23,10 @@ public struct OutdatedDependenciesTask {
             arguments.append(contentsOf: ["--package-path", location.pathString])
         }
         
-        arguments.append("--dry-run")
-        
+        if checkOutdated {
+            arguments.append("--dry-run")
+        }
+
         try await terminalService.run(executableURL, arguments: arguments)
     }
     
