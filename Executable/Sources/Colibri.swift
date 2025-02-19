@@ -11,6 +11,7 @@ struct Colibri: AsyncParsableCommand {
             Build.self,
             Clean.self, 
             Create.self,
+            Open.self, 
             Outdated.self,
             Update.self
         ],
