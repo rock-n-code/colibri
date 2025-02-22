@@ -7,6 +7,9 @@ extension Colibri.Build {
         // MARK: Properties
         
         @Option(name: .shortAndLong)
+        var artifact: Artifact = .executable
+        
+        @Option(name: .shortAndLong)
         var location: String?
 
     }

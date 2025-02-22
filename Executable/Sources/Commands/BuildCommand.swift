@@ -20,9 +20,9 @@ extension Colibri {
         mutating func run() async throws {
             let terminalService = TerminalService()
 
-            let buildProject = BuildProjectTask(terminalService: terminalService)
+            let buildArtifact = BuildArtifactTask(terminalService: terminalService)
             
-            try await buildProject(at: options.locationURL)
+            try await buildArtifact(options.artifact, at: options.locationURL)
         }
 
     }

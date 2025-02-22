@@ -3,9 +3,9 @@ public enum IDE: String {
     case xcode
 }
 
-// MARK: - Extension
+// MARK: - Randomable
 
-extension IDE {
+extension IDE: Randomable {
     
     // MARK: Functions
     
@@ -14,7 +14,3 @@ extension IDE {
     }
     
 }
-
-// MARK: - CaseIterable
-
-extension IDE: CaseIterable {}
